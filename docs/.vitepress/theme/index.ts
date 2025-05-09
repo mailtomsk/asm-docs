@@ -67,7 +67,7 @@ function toggleNavVisibility() {
   setTimeout(() => {
     const sidebar:HTMLElement | null = document.querySelector('.VPSidebar')
     const navbar:HTMLElement | null = document.querySelector('.VPNav')
-    const footer:HTMLElement | null = document.querySelector('.VPDocsFooter')
+    const footer:HTMLElement | null = document.querySelector('.VPDocFooter')
     if (sidebar && navbar && footer) {
       sidebar.style.display = isLoginPage ? 'none' : 'block'
       navbar.style.display = isLoginPage ? 'none' : 'flex'
