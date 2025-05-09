@@ -37,15 +37,17 @@ export default {
   },
   enhanceApp({ app, router, siteData }) {
     router.onBeforeRouteChange = (to) => {
-      const isAuthenticated = localStorage.getItem('auth')
-      if (!isAuthenticated && to !== '/login.html') {
-        window.location.href = '/login'
-        return false
-      }
-      if (isAuthenticated && to === '/logout.html') {
-        localStorage.removeItem('auth')
-        window.location.href = '/login'
-        return false
+      if(typeof window !== 'undefined') {
+        const isAuthenticated = localStorage.getItem('auth')
+        if (!isAuthenticated && to !== '/login.html') {
+          window.location.href = '/login'
+          return false
+        }
+        if (isAuthenticated && to === '/logout.html') {
+          localStorage.removeItem('auth')
+          window.location.href = '/login'
+          return false
+        }
       }
       return true
     }
