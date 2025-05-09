@@ -1,17 +1,53 @@
 // https://vitepress.dev/guide/custom-theme
-import { h } from 'vue'
-import type { Theme } from 'vitepress'
+import { h, onMounted, watch } from 'vue'
+import { useRouter, type Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
 
 export default {
   extends: DefaultTheme,
   Layout: () => {
+
+    const router = useRouter()
+
+    const checkAuth = () => {
+      const isAuthenticated = localStorage.getItem('auth')
+      const publicPaths = ['/login']
+      const currentPath = window.location.pathname
+
+      if (!isAuthenticated && !publicPaths.includes(currentPath)) {
+        window.location.href = '/login'
+      } else if (isAuthenticated && currentPath === '/login') {
+        window.location.href = '/'
+      }
+    }
+
+    // Check auth on mount
+    onMounted(() => {
+      checkAuth()
+    })
+
+    watch(() => window.location.pathname, () => {
+      checkAuth()
+    })
+
     return h(DefaultTheme.Layout, null, {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
     })
   },
   enhanceApp({ app, router, siteData }) {
-    // ...
+    router.onBeforeRouteChange = (to) => {
+      const isAuthenticated = localStorage.getItem('auth')
+      if (!isAuthenticated && to !== '/login.html') {
+        window.location.href = '/login'
+        return false
+      }
+      if (isAuthenticated && to === '/logout.html') {
+        localStorage.removeItem('auth')
+        window.location.href = '/login'
+        return false
+      }
+      return true
+    }
   }
 } satisfies Theme
