@@ -67,9 +67,11 @@ function toggleNavVisibility() {
   setTimeout(() => {
     const sidebar:HTMLElement | null = document.querySelector('.VPSidebar')
     const navbar:HTMLElement | null = document.querySelector('.VPNav')
-    if (sidebar && navbar) {
+    const footer:HTMLElement | null = document.querySelector('.VPDocsFooter')
+    if (sidebar && navbar && footer) {
       sidebar.style.display = isLoginPage ? 'none' : 'block'
       navbar.style.display = isLoginPage ? 'none' : 'flex'
+      footer.style.display = isLoginPage ? 'none' : 'block'
     }
   }, 10);
 }
