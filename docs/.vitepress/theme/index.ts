@@ -22,6 +22,17 @@ export default {
       }
     }
 
+    const toggleNavVisibility = () => {
+      const isLoginPage = window.location.pathname === '/login'
+      const sidebar:HTMLElement | null = document.querySelector('.VPSidebar')
+      const navbar:HTMLElement | null = document.querySelector('.VPNav')
+      
+      if (sidebar && navbar) {
+        sidebar.style.display = isLoginPage ? 'none' : 'block'
+        navbar.style.display = isLoginPage ? 'none' : 'flex'
+      }
+    }
+
     // Check auth on mount
     onMounted(() => {
       checkAuth()
@@ -29,6 +40,7 @@ export default {
 
     watch(() => window.location.pathname, () => {
       checkAuth()
+      toggleNavVisibility()
     })
 
     return h(DefaultTheme.Layout, null, {
