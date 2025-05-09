@@ -22,17 +22,6 @@ export default {
       }
     }
 
-    const toggleNavVisibility = () => {
-      const isLoginPage = window.location.pathname === '/login'
-      const sidebar:HTMLElement | null = document.querySelector('.VPSidebar')
-      const navbar:HTMLElement | null = document.querySelector('.VPNav')
-      
-      if (sidebar && navbar) {
-        sidebar.style.display = isLoginPage ? 'none' : 'block'
-        navbar.style.display = isLoginPage ? 'none' : 'flex'
-      }
-    }
-
     // Check auth on mount
     onMounted(() => {
       checkAuth()
@@ -40,7 +29,6 @@ export default {
 
     watch(() => window.location.pathname, () => {
       checkAuth()
-      toggleNavVisibility()
     })
 
     return h(DefaultTheme.Layout, null, {
@@ -62,6 +50,27 @@ export default {
         }
       }
       return true
+    },
+    router.onAfterPageLoad = async (to) => {
+      if (typeof window !== 'undefined') {
+        if (to === '/login.html') {
+          toggleNavVisibility();
+          return
+        }
+      }
     }
   }
 } satisfies Theme
+
+function toggleNavVisibility() {
+  const isLoginPage = window.location.pathname === '/login'
+  setTimeout(() => {
+    const sidebar:HTMLElement | null = document.querySelector('.VPSidebar')
+    const navbar:HTMLElement | null = document.querySelector('.VPNav')
+    if (sidebar && navbar) {
+      sidebar.style.display = isLoginPage ? 'none' : 'block'
+      navbar.style.display = isLoginPage ? 'none' : 'flex'
+    }
+  }, 10);
+}
+
