@@ -50,6 +50,22 @@
   --vp-button-brand-active-bg: #3A4FB8;
 }
 
+/* Hide navigation on login page */
+.login-page {
+  .VPSidebar,
+  .VPNavBar .content {
+    display: none !important;
+  }
+}
+
+/* Add this class when the current path is /login */
+[class*="/login"] {
+  .VPSidebar,
+  .VPNavBar .content {
+    display: none !important;
+  }
+}
+
 /**
  * Component: Home
  * -------------------------------------------------------------------------- */
