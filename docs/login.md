@@ -52,10 +52,6 @@ const login = () => {
 
 <style>
 
-aside, .VPLink.link.VPNavBarMenuLink:nth-child(3) {
-    display: none;
-}
-
 .login-container {
   display: flex;
   justify-content: center;
